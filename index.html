@@ -3,443 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project variation: 어승기 포트폴리오</title>
+    <title>Project Variation: 어승기 포트폴리오</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chosen Palette: Calm Harmony (Warm Neutrals) -->
-    <!-- Application Structure Plan: A single-page scrolling portfolio with a highly interactive demo. The demo is the centerpiece, allowing users to directly manipulate the inputs for the 'AI Mixer UI' (Lorebooks, Style Checkboxes, Wildcard Toggle). This directly showcases the project's core "user-controlled RAG" concept. -->
-    <!-- Visualization & Content Choices: Report Info: 'AI Mixer UI' with user inputs. Goal: Demonstrate flexible, user-driven AI generation. Method: Interactive HTML/Tailwind/JS mockup. Interaction: Users type in textareas (Lorebooks), check boxes (Styles), and flip a toggle (Wildcard), then see simulated, context-aware output. Justification: This is far more powerful than a static description. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
         body {
-            font-family: 'Inter', 'Pretendard', sans-serif;
-            background-color: #f8f7f4;
-            color: #333;
+            font-family: 'Pretendard', sans-serif;
+            background-color: #FDFBF7; /* App.css 배경색 반영 */
+            color: #1e293b;
         }
-        .hero-bg {
-            background: linear-gradient(135deg, #ece9e6 0%, #ffffff 100%);
+
+        .font-serif {
+            font-family: 'Playfair Display', serif; /* App.tsx 폰트 느낌 반영 */
         }
+
+        .section-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        .btn-primary {
+            background-color: #1e293b;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary:hover {
+            background-color: #334155;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Demo UI Styles (from App.tsx/index.css) */
+        .demo-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-field {
+            width: 100%;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 1rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+            resize: none;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #1e293b;
+            background-color: #fff;
+        }
+
         .nav-link {
-            @apply px-3 py-2 rounded-md text-sm font-medium text-neutral-600 hover:bg-neutral-200 hover:text-neutral-900 transition-colors;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+            color: #64748b;
+            font-weight: 500;
         }
-        .skill-pill {
-            @apply inline-block bg-neutral-200 text-neutral-800 px-3 py-1 rounded-full text-sm font-medium mr-2 mb-2;
+        
+        .nav-link:hover, .nav-link.active {
+            color: #1e293b;
+            background-color: rgba(0,0,0,0.05);
         }
-        .toggle-label {
-            @apply flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border border-neutral-200;
-        }
-        .toggle-switch {
-            @apply relative inline-flex items-center h-6 rounded-full w-11 cursor-pointer;
-        }
-        .toggle-switch-checkbox {
-            @apply absolute w-full h-full opacity-0 cursor-pointer;
-        }
-        .toggle-switch-slider {
-            @apply absolute inset-0 transition-colors duration-300 ease-in-out bg-neutral-300 rounded-full;
-        }
-        .toggle-switch-checkbox:checked + .toggle-switch-slider {
-            @apply bg-stone-600;
-        }
-        .toggle-switch-slider::before {
-            @apply absolute left-1 top-1 w-4 h-4 transition-transform duration-300 ease-in-out transform bg-white rounded-full shadow;
-        }
-        .toggle-switch-checkbox:checked + .toggle-switch-slider::before {
-            @apply translate-x-5;
-        }
-        .tab-button {
-            @apply px-4 py-2 font-medium text-neutral-500 transition-colors;
-        }
-        .tab-button.active {
-            @apply text-stone-700 border-b-2 border-stone-700;
-        }
-        .tab-content {
-            @apply hidden p-4;
-        }
-        .tab-content.active {
-            @apply block;
-        }
-        .form-checkbox {
-            @apply h-5 w-5 text-stone-600 rounded border-neutral-300 focus:ring-stone-500;
-        }
-        .form-textarea {
-            @apply w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent transition;
+
+        /* Chart Container */
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
         }
     </style>
 </head>
-<body class="bg-neutral-50 antialiased">
+<body class="antialiased">
 
-    <!-- Header & Navigation -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
-        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
-                    <span class="text-xl font-bold text-stone-800">어승기</span>
+                <div class="flex items-center gap-2">
+                    <span class="font-serif font-bold text-xl text-slate-900">Project Variation</span>
                 </div>
-                <div class="hidden sm:ml-6 sm:flex sm:space-x-4">
-                    <a href="#about" class="nav-link">소개</a>
-                    <a href="#skills" class="nav-link">기술 스택</a>
-                    <a href="#project" classs="nav-link">프로젝트</a>
+                <div class="hidden md:flex space-x-2">
+                    <a class="nav-link active" onclick="scrollToSection('overview')">개요 & 기획</a>
+                    <a class="nav-link" onclick="scrollToSection('features')">핵심 기능</a>
+                    <a class="nav-link" onclick="scrollToSection('demo')">Live 시연</a>
+                    <a class="nav-link" onclick="scrollToSection('video')">시연 영상</a>
                 </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
-
-        <!-- Section 1: Hero & About Me -->
-        <section id="about" class="mb-16 scroll-mt-20">
-            <div class="hero-bg p-8 md:p-12 rounded-lg shadow-lg overflow-hidden">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                    <div class="md:col-span-1 flex justify-center">
-                        <img src="https://placehold.co/200x200/e2e8f0/334155?text=프로필+이미지" 
-                             alt="어승기 프로필 이미지" 
-                             class="rounded-full w-40 h-40 md:w-48 md:h-48 object-cover border-4 border-white shadow-md">
-                    </div>
-                    <div class="md:col-span-2">
-                        <h1 class="text-3xl md:text-4xl font-bold text-stone-800 mb-4">
-                            기술을 통해 사용자의 창의적인 잠재력을 극대화하는 개발자 어승기입니다.
-                        </h1>
-                        <p class="text-neutral-700 text-lg mb-6">
-                            저는 아이디어를 현실로 구현하고, 기술을 통해 복잡한 문제를 해결하는 과정에 매력을 느끼는 개발자입니다. AI라는 강력한 도구를 사용자가 직접 '조율'하며 창의적인 파트너로 활용할 수 있도록 이번 프로젝트를 설계했습니다. 저는 강력한 기술이 사람을 대체하는 것이 아니라, 사람의 창의성을 돕는 영역에서 가장 빛난다고 생각합니다.
-                        </p>
-                        <div class="flex space-x-4">
-                            <a href="mailto:your-email@example.com" class="bg-stone-700 text-white px-5 py-2 rounded-lg font-medium hover:bg-stone-800 transition-colors">
-                                이메일
-                            </a>
-                            <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer" class="bg-neutral-200 text-neutral-800 px-5 py-2 rounded-lg font-medium hover:bg-neutral-300 transition-colors">
-                                GitHub
-                            </a>
-                        </div>
-                    </div>
+                <div class="flex items-center gap-3">
+                    <a href="https://github.com/your-username/project-variation" target="_blank" class="text-slate-600 hover:text-black transition-colors">
+                        <i class="fa-brands fa-github fa-lg"></i>
+                    </a>
+                    <span class="text-sm font-bold bg-slate-100 px-3 py-1 rounded-full text-slate-600">어승기</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </nav>
 
-        <!-- Section 2: Skills -->
-        <section id="skills" class="mb-16 scroll-mt-20">
-            <h2 class="text-3xl font-bold text-neutral-800 mb-6">보유 기술</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-stone-700 mb-3">프론트엔드</h3>
-                    <div>
-                        <span class="skill-pill">TypeScript</span>
-                        <span class="skill-pill">React</span>
-                        <span class="skill-pill">Tailwind CSS</span>
-                    </div>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-32">
+
+        <!-- 1. Overview & Hero -->
+        <section id="overview" class="pt-10 text-center">
+            <h1 class="text-5xl md:text-6xl font-serif font-bold text-slate-900 mb-6 leading-tight">
+                당신의 문장에<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900">새로운 관점(Variation)</span>을 더하다
+            </h1>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+                정형화된 답변만 내놓는 챗봇이 아닙니다. <br>
+                <strong>와일드카드(Wildcard)</strong>와 <strong>RAG</strong>를 통해 일반적인 AI에서는 얻을 수 없는<br>
+                <strong>예상 밖의 통찰과 서사적 영감</strong>을 제공하는 작문 파트너입니다.
+            </p>
+            
+            <div class="flex justify-center gap-4">
+                <a href="https://github.com/your-repo-link" target="_blank" class="btn-primary">
+                    <i class="fa-brands fa-github"></i> GitHub 코드 보기 (배포)
+                </a>
+                <button onclick="scrollToSection('demo')" class="px-8 py-3 bg-white text-slate-700 font-semibold rounded border border-slate-300 hover:bg-slate-50 transition-colors">
+                    기능 체험하기
+                </button>
+            </div>
+
+            <!-- Planning & Dev Details -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-20 text-left">
+                <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye text-blue-600"></i> 차별화 포인트 (Core Value)
+                    </h3>
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        기존 챗봇은 '정답'과 '일관성'에 집중하여 창의적인 글쓰기에는 한계가 있었습니다. <strong>Project Variation</strong>은 이를 극복하기 위해 <strong>'와일드카드 RAG'</strong> 시스템을 도입했습니다.
+                    </p>
+                    <ul class="list-disc list-inside text-slate-600 text-sm space-y-2">
+                        <li><strong>의도된 이질성:</strong> 문맥과 무관한 낯선 감각 정보를 주입하여 사고의 틀을 깹니다.</li>
+                        <li><strong>사용자 주도 제어:</strong> AI의 생성 방향(세계관, 캐릭터, 문체, 의외성)을 사용자가 직접 모듈 단위로 조율합니다.</li>
+                    </ul>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-stone-700 mb-3">백엔드</h3>
-                    <div>
-                        <span class="skill-pill">Node.js</span>
-                        <span class="skill-pill">Express</span>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-stone-700 mb-3">AI & Tools</h3>
-                    <div>
-                        <span class="skill-pill">Ollama</span>
-                        <span class="skill-pill">LLaMA 3 8B</span>
-                        <span class="skill-pill">RAG</span>
-                        <span class="skill-pill">Git</span>
-                        <span class="skill-pill">VS Code</span>
-                        <span class="skill-pill">Figma</span>
-                    </div>
+                <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-code text-green-600"></i> 개발 내용 (Tech Stack)
+                    </h3>
+                    <ul class="space-y-2 text-slate-600 text-sm">
+                        <li><strong>Frontend:</strong> React, TypeScript, Tailwind CSS (반응형 UI)</li>
+                        <li><strong>Backend:</strong> Node.js, Express (3중 RAG 파이프라인 구축)</li>
+                        <li><strong>AI Engine:</strong> Ollama (Local LLaMA 3 8B Instruct 모델)</li>
+                        <li><strong>Feature:</strong> 동적 프롬프트 엔지니어링, 실시간 스트리밍 응답</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: Project -->
-        <section id="project" class="scroll-mt-20">
-            <h2 class="text-3xl font-bold text-neutral-800 mb-2">Project variation</h2>
-            <p class="text-xl text-stone-600 mb-6">AI 작문 파트너</p>
+        <!-- 2. Key Features -->
+        <section id="features" class="scroll-mt-24">
+            <div class="section-header">
+                <h2 class="section-title">핵심 기능 (Key Features)</h2>
+                <p class="text-slate-500">일반 챗봇과는 다른, Project Variation만의 RAG 모듈</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-white text-xl mb-6">
+                        <i class="fa-solid fa-book-journal-whills"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">로어북 (Lorebook)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        사용자가 정의한 고유한 세계관과 캐릭터 설정을 RAG로 주입합니다. AI가 이 설정을 철저히 준수하며 서사를 전개하도록 강제합니다.
+                    </p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-white text-xl mb-6">
+                        <i class="fa-solid fa-feather-pointed"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">스타일 (Style)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        '건조한', '느와르', '동화풍' 등 15가지 이상의 문체 데이터셋을 활용해, 동일한 내용이라도 톤앤매너에 따라 전혀 다른 분위기로 재구성합니다.
+                    </p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow bg-slate-50">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-xl mb-6">
+                        <i class="fa-solid fa-dice-d20"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3 text-indigo-900">와일드카드 (Wildcard)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong>프로젝트의 핵심 차별점.</strong> 예측 불가능한 '감각/오브젝트' 데이터를 무작위로 추출해 문맥에 충돌시킴으로써, 평범한 문장에 독창적인 관점을 부여합니다.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-            <!-- Project Problem -->
-            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                <h3 class="text-2xl font-semibold text-stone-700 mb-3">문제 정의</h3>
-                <p class="text-neutral-700 leading-relaxed">
-                    기존 AI 글쓰기 도구는 '정답'과 '교정'에 집중하지만, 정작 창의적인 글쓰기(소설, 에세이)에서는 '영감'이 더욱 중요합니다. 본 프로젝트는 '글쓰기가 막히는 경험'을 해결하기 위해, AI의 예측 불가능성을 '유해한 환각'이 아닌 **'의도된 창의적 변주(Variation)'**로 제어할 수 있다면, 작가에게 강력한 영감을 주는 도구가 될 것이라는 가설에서 출발했습니다. 사용자가 직접 AI의 영감을 '조율'하는 새로운 작문 보조 도구를 개발하는 것을 목표로 했습니다.
-                </p>
+        <!-- 3. Live Demo (Simulation) -->
+        <section id="demo" class="scroll-mt-24">
+            <div class="section-header">
+                <h2 class="section-title">기능 시연 (Live Demo)</h2>
+                <p class="text-slate-500">실제 구현된 <code>App.tsx</code>의 UI와 RAG 로직을 시뮬레이션한 <strong>맛보기(Preview)</strong>입니다.</p>
+                <p class="text-xs text-slate-400 mt-1">* 서버 연결 없이 동작하도록 재구성된 버전입니다.</p>
             </div>
 
-            <!-- INTERACTIVE DEMO (Upgraded) -->
-            <div class="bg-white p-6 rounded-lg shadow-lg mb-8 border-2 border-stone-300">
-                <h3 class="text-2xl font-semibold text-stone-700 mb-4 text-center">✨ 인터랙티브 데모: AI 믹서</h3>
-                <p class="text-center text-neutral-600 mb-6">AI의 '참조 데이터'를 직접 제어하고 생성 버튼을 눌러보세요.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- 1. AI RAG Control Panel -->
-                    <div class="space-y-6">
-                        <!-- Lorebook 1 -->
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <h4 class="text-lg font-semibold text-neutral-700">① 로어북 1 (예: 세계관)</h4>
-                                <div class="toggle-switch">
-                                    <input type="checkbox" id="lorebook1-toggle" class="toggle-switch-checkbox" checked>
-                                    <div class="toggle-switch-slider"></div>
-                                </div>
-                            </div>
-                            <textarea id="lorebook1-text" rows="3" class="form-textarea" placeholder="예: 이 세계는 마법과 기계가 공존하며...">이 세계는 마법과 기계가 공존하며, 하늘에는 두 개의 달이 떠 있다.</textarea>
-                        </div>
+            <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden border border-slate-200">
+                <!-- App Header Simulation -->
+                <div class="bg-[#FDFBF7] p-8 border-b border-slate-100 text-center">
+                    <h3 class="text-3xl font-serif font-bold text-slate-900 mb-2">Project Variation Console</h3>
+                    <p class="text-slate-500 font-serif italic text-sm">당신의 상상, 세 가지 이야기로 피어나다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[600px]">
+                    <!-- Control Panel -->
+                    <div class="lg:col-span-5 bg-slate-50 border-r border-slate-200 p-6 space-y-8 overflow-y-auto max-h-[800px]">
                         
-                        <!-- Lorebook 2 -->
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <h4 class="text-lg font-semibold text-neutral-700">② 로어북 2 (예: 캐릭터)</h4>
-                                <div class="toggle-switch">
-                                    <input type="checkbox" id="lorebook2-toggle" class="toggle-switch-checkbox">
-                                    <div class="toggle-switch-slider"></div>
-                                </div>
+                        <!-- Lorebook -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-serif font-bold text-slate-800 border-l-4 border-slate-800 pl-3">로어북 (설정)</h4>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="lorebook-toggle" class="w-4 h-4 accent-slate-800" checked>
+                                    <span class="text-xs font-bold text-slate-600">ON</span>
+                                </label>
                             </div>
-                            <textarea id="lorebook2-text" rows="3" class="form-textarea" placeholder="예: 이름: 카일, 성격: 냉소적, 특징: 오른팔이 기계...">이름: 카일, 성격: 냉소적, 특징: 오른팔이 기계 의수이다.</textarea>
+                            <textarea id="lorebook-input" rows="3" class="input-field text-sm" placeholder="세계관 설정을 입력하세요...">이 세계는 마법과 기계공학이 공존하며, 하늘에는 두 개의 붉은 달이 떠 있다.</textarea>
                         </div>
 
-                        <!-- Style Selection -->
-                        <div>
-                            <h4 class="text-lg font-semibold text-neutral-700 mb-3">③ 문체 제안 (스타일)</h4>
-                            <div class="grid grid-cols-2 gap-3">
-                                <label class="flex items-center space-x-2 p-3 bg-neutral-50 rounded-md">
-                                    <input type="checkbox" id="style-lyrical" class="form-checkbox">
-                                    <span>서정적인</span>
+                        <!-- Character (NEW) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-serif font-bold text-slate-800 border-l-4 border-slate-800 pl-3">캐릭터 설정</h4>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="char-toggle" class="w-4 h-4 accent-slate-800" checked>
+                                    <span class="text-xs font-bold text-slate-600">ON</span>
                                 </label>
-                                <label class="flex items-center space-x-2 p-3 bg-neutral-50 rounded-md">
-                                    <input type="checkbox" id="style-epic" class="form-checkbox">
-                                    <span>웅장한</span>
+                            </div>
+                            <div class="space-y-2">
+                                <textarea id="char1-input" rows="2" class="input-field text-sm" placeholder="캐릭터 1: 이름, 성격, 특징...">이름: 카일, 성격: 냉소적이고 과묵함, 특징: 오른팔이 기계 의수로 되어 있음.</textarea>
+                                <textarea id="char2-input" rows="2" class="input-field text-sm" placeholder="캐릭터 2 (선택): 이름, 성격...">이름: 엘라, 성격: 호기심 많고 활발함, 특징: 고대 언어를 해석할 줄 앎.</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Style -->
+                        <div class="space-y-2">
+                            <h4 class="font-serif font-bold text-slate-800 border-l-4 border-slate-800 pl-3">문체 선택</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <label class="cursor-pointer px-3 py-1 rounded-full border border-slate-200 bg-white text-xs has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
+                                    <input type="radio" name="style" value="느와르" class="hidden" checked> 느와르
                                 </label>
-                                <label class="flex items-center space-x-2 p-3 bg-neutral-50 rounded-md">
-                                    <input type="checkbox" id="style-concise" class="form-checkbox">
-                                    <span>간결한</span>
+                                <label class="cursor-pointer px-3 py-1 rounded-full border border-slate-200 bg-white text-xs has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
+                                    <input type="radio" name="style" value="건조한" class="hidden"> 건조한
                                 </label>
-                                <label class="flex items-center space-x-2 p-3 bg-neutral-50 rounded-md">
-                                    <input type="checkbox" id="style-professional" class="form-checkbox">
-                                    <span>전문적인</span>
+                                <label class="cursor-pointer px-3 py-1 rounded-full border border-slate-200 bg-white text-xs has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
+                                    <input type="radio" name="style" value="동화풍" class="hidden"> 동화풍
+                                </label>
+                                <label class="cursor-pointer px-3 py-1 rounded-full border border-slate-200 bg-white text-xs has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
+                                    <input type="radio" name="style" value="웅장한" class="hidden"> 웅장한
                                 </label>
                             </div>
                         </div>
 
                         <!-- Wildcard -->
-                        <div>
-                            <label for="wildcard-toggle" class="toggle-label">
-                                <span class="font-medium text-neutral-800">④ 창의적 불협화음 (와일드카드)</span>
-                                <div class="toggle-switch">
-                                    <input type="checkbox" id="wildcard-toggle" class="toggle-switch-checkbox">
-                                    <div class="toggle-switch-slider"></div>
+                        <div class="space-y-2 pt-4 border-t border-slate-200">
+                            <div class="flex justify-between items-center bg-indigo-50 p-3 rounded-md border border-indigo-100">
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-serif font-bold text-indigo-900">와일드카드 (Wildcard)</h4>
                                 </div>
-                            </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="wildcard-toggle" class="w-4 h-4 accent-indigo-600" checked>
+                                    <span class="text-xs font-bold text-indigo-700">ON</span>
+                                </label>
+                            </div>
+                            <p class="text-xs text-slate-500 px-1">
+                                * <code>data/wildcards.txt</code>의 데이터를 사용하여 예상치 못한 관점을 주입합니다.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- 2. Workspace -->
-                    <div class="space-y-4 flex flex-col">
-                        <div>
-                            <label for="text-input" class="block text-lg font-semibold text-neutral-700 mb-2">글 입력용 (Input)</label>
-                            <textarea id="text-input" rows="4" class="form-textarea" placeholder="예: 그가 방에 들어왔다.">그가 방에 들어왔다.</textarea>
+                    <!-- Input/Output Panel -->
+                    <div class="lg:col-span-7 p-8 flex flex-col bg-white">
+                        <div class="mb-6 relative">
+                            <h4 class="font-serif font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <span class="w-2 h-6 bg-slate-800 block"></span> 작성 요청
+                            </h4>
+                            <textarea id="user-input" rows="4" class="input-field text-lg resize-none shadow-sm mb-4" placeholder="어떤 이야기를 쓰고 싶으신가요?">그가 방에 들어왔다.</textarea>
+                            <div class="text-right">
+                                <button id="generate-btn" class="btn-primary">
+                                    <i class="fa-solid fa-pen-nib"></i> 작성 시작
+                                </button>
+                            </div>
                         </div>
-                        <div class="flex-grow">
-                            <label for="text-output" class="block text-lg font-semibold text-neutral-700 mb-2">AI 제안 결과 (Output)</label>
-                            <textarea id="text-output" rows="12" class="w-full h-full min-h-[200px] p-3 border border-neutral-300 rounded-lg bg-neutral-100 transition" readonly placeholder="AI의 제안이 여기에 표시됩니다."></textarea>
-                        </div>
-                        <button id="generate-button" class="w-full bg-stone-700 text-white px-5 py-3 rounded-lg font-medium hover:bg-stone-800 transition-colors text-lg mt-auto">
-                            생성하기
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Project Details Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Architecture -->
-                <div class="bg-white p-6 rounded-lg shadow-md lg:col-span-2">
-                    <h3 class="text-2xl font-semibold text-stone-700 mb-3">아키텍처/설계</h3>
-                    <p class="text-neutral-700 mb-4 leading-relaxed">
-                        LLaMA 3 8B 모델을 Ollama를 통해 100% 로컬 환경에서 구동하여 프라이버시를 확보했습니다. 핵심은 AI의 출력을 제어하는 **'모듈형 RAG 아키텍처'**입니다. 사용자는 UI에서 토글 스위치를 통해 ①글의 설정/캐릭터(로어북), ②문체 제안(스타일), ③창의적 불협화음(와일드카드) RAG 모듈을 개별적으로 껐다 켤 수 있습니다. 이 'AI 믹서' UI를 통해 사용자가 AI의 제안을 직접 '조율'하도록 설계했습니다.
-                    </p>
-                    <img src="https://placehold.co/800x400/e2e8f0/334155?text=아키텍처+다이어그램+(UI+->+Node.js+->+3+RAG/LLM+->+UI)"
-                         alt="아키텍처 다이어그램" class="w-full rounded-lg object-cover">
-                </div>
-
-                <!-- Core Function 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-stone-700 mb-3">핵심 기능 1: 모듈형 RAG 컨트롤 패널</h3>
-                    <p class="text-neutral-700 mb-4 leading-relaxed">
-                        React와 TypeScript를 사용해 'AI 믹서' UI를 구현했습니다. 사용자가 [글의 설정], [캐릭터], [와일드카드]의 토글을 ON/OFF 하면, 이 상태값이 백엔드(Node.js)로 전달됩니다. 백엔드는 활성화된 RAG 소스(로어북, 와일드카드 등)에서만 정보를 검색하고, 이를 조합하여 최종 프롬프트를 동적으로 생성한 뒤 Ollama API로 전송합니다. 이를 통해 사용자가 실시간으로 AI의 '참조 데이터'를 제어할 수 있게 했습니다.
-                    </p>
-                    <img src="https://placehold.co/600x300/e2e8f0/334155?text=로어북+ON/OFF+비교+스크린샷"
-                         alt="핵심 기능 1 스크린샷" class="w-full rounded-lg object-cover">
-                </div>
-
-                <!-- Core Function 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-stone-700 mb-3">핵심 기능 2: '창의적 불협화음' 주입</h3>
-                    <p class="text-neutral-700 mb-4 leading-relaxed">
-                        AI의 '유해한 환각'을 억제하는 대신, '의도된 창의성'을 주입하는 '와일드카드 RAG'를 구현했습니다. `wildcards.txt`에는 현재 문맥과 의도적으로 상관없는 낯선 감각, 개념(예: '축축한', '고요한 심해')을 저장했습니다. 사용자가 이 기능을 활성화하면, LLM은 이 '낯선 재료'를 기존 문맥과 창의적으로 연결해야 하는 미션을 받아, 사용자의 막힌 생각의 '물꼬를 트는' 역할을 수행합니다.
-                    </p>
-                    <img src="https://placehold.co/600x300/e2e8f0/334155?text=와일드카드+ON+예시+스크린샷"
-                         alt="핵심 기능 2 스크린샷" class="w-full rounded-lg object-cover">
-                </div>
-
-                <!-- Role & Contribution -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-stone-700 mb-3">나의 역할 및 기여</h3>
-                    <ul class="list-disc list-inside text-neutral-700 space-y-2 leading-relaxed">
-                        <li>프로젝트 기획 및 '모듈형 RAG 믹서' 아키텍처 전체 설계</li>
-                        <li>Ollama 기반 LLaMA 3 8B 로컬 구동 환경 구축 및 API 연동</li>
-                        <li>3종 RAG(로어북, 스타일, 와일드카드) 데이터베이스 설계 및 백엔드 로직 구현</li>
-                        <li>React 및 TypeScript 기반 토글 UI(컨트롤 패널) 프론트엔드 전체 개발</li>
-                    </ul>
-                </div>
-
-                <!-- Retrospective (Tabs) -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-semibold text-stone-700 mb-3">결과 및 회고</h3>
-                    <!-- Tab Headers -->
-                    <div class="border-b border-neutral-200 mb-4">
-                        <nav class="flex -mb-px" id="tab-nav">
-                            <button class="tab-button active" data-tab="results">결과 및 성과</button>
-                            <button class="tab-button" data-tab="learned">배운 점</button>
-                            <button class="tab-button" data-tab="improvements">개선점</button>
-                        </nav>
-                    </div>
-                    <!-- Tab Content -->
-                    <div id="tab-content" class="text-neutral-700 leading-relaxed">
-                        <div id="tab-results" class="tab-content active">
-                            <ul class="list-disc list-inside space-y-2">
-                                <li>AI의 제안을 '교정'뿐만이 아닌 '영감'의 영역으로 확장시킨 독창적인 작문 보조 도구 완성</li>
-                                <li>100% 로컬 구동 및 RAG 제어 기능을 통해, AI에게 의도적인 '불협화음'을 주문하여 표현의 한계를 극복하는 새로운 패러다임 제시</li>
-                                <li>웹 UI를 통해 사용자가 AI의 작동 방식을 직관적으로 제어할 수 있는 높은 수준의 사용자 경험(UX) 구현</li>
-                            </ul>
-                        </div>
-                        <div id="tab-learned" class="tab-content">
-                            <ul class="list-disc list-inside space-y-2">
-                                <li>LLM의 예측 불가능성을 '버그'가 아닌 '기능'으로 제어할 수 있음을 배웠습니다.</li>
-                                <li>Ollama를 통해 로컬 AI를 웹 서비스에 연동하는 풀스택 아키텍처를 설계하고 직접 구현해본 경험을 얻었습니다.</li>
-                            </ul>
-                        </div>
-                        <div id="tab-improvements" class="tab-content">
-                            <ul class="list-disc list-inside space-y-2">
-                                <li>개인적으로는 ComfyUI처럼 사용자가 직접 RAG 노드를 시각적으로 연결하는 UI(React Flow 등 활용)로 고도화하고 싶습니다.</li>
-                                <li>로어북을 단순 텍스트가 아닌 벡터DB(Chroma, LanceDB)와 연동하여 더 정교한 의미 기반 검색이 가능하도록 RAG 파이프라인을 개선하고 싶습니다.</li>
-                            </ul>
+                        <div class="flex-grow flex flex-col pt-6 border-t border-slate-100">
+                            <h4 class="font-serif font-bold text-slate-800 mb-3 flex items-center gap-2 justify-between">
+                                <div><span class="w-2 h-6 bg-slate-800 inline-block mr-2 align-middle"></span>결과물 (3가지 변주)</div>
+                                <span id="status-indicator" class="text-xs font-normal text-slate-400 font-sans">Ready</span>
+                            </h4>
+                            
+                            <div id="output-area" class="flex-grow bg-[#FDFBF7] rounded-lg border border-slate-200 p-6 overflow-y-auto space-y-6 font-serif text-slate-700 leading-loose min-h-[300px]">
+                                <div class="text-center text-slate-300 mt-20">
+                                    <p>입력된 내용을 바탕으로 새로운 이야기가 이곳에 피어납니다.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- 4. Demo Video -->
+        <section id="video" class="scroll-mt-24 mb-24">
+            <div class="section-header">
+                <h2 class="section-title">시연 동영상</h2>
+                <p class="text-slate-500">실제 로컬 환경에서의 구동 및 활용 예시</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto aspect-video bg-black rounded-xl shadow-2xl overflow-hidden border border-slate-800">
+                <video controls class="w-full h-full object-cover">
+                    <source src="231b73d5-2bc5-444b-9eda-f89877f63e55_0.mp4" type="video/mp4">
+                    브라우저가 동영상을 지원하지 않습니다.
+                </video>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="text-center p-6 mt-16 border-t border-neutral-200">
-        <p class="text-neutral-500">&copy; 2025 어승기. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-slate-800 font-serif font-bold text-lg mb-2">Project Variation</p>
+            <p class="text-slate-500 text-sm">2025-1 Semester Final Project • Developer: 어승기</p>
+            <div class="mt-4 flex justify-center gap-4">
+                <a href="#" class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Interactive Demo Logic
-            const lorebook1Toggle = document.getElementById('lorebook1-toggle');
-            const lorebook1Text = document.getElementById('lorebook1-text');
-            const lorebook2Toggle = document.getElementById('lorebook2-toggle');
-            const lorebook2Text = document.getElementById('lorebook2-text');
+        // ============================================================
+        // 1. Simulation Logic (Recreating Backend + LLM Logic)
+        // ============================================================
+
+        // Mock Data: wildcards.txt content from index.js
+        const wildcardsData = [
+            "[감각:시각] 세상의 모든 색이 회색으로 바랜 듯한",
+            "[감각:청각] 유리잔이 바닥에 떨어져 산산조각 나는 소리",
+            "[감각:후각] 비에 젖은 흙내음과 녹슨 쇠 냄새",
+            "[감각:촉각] 얼음을 만진 듯 손끝이 저릿한",
+            "[분위기:장소] 아무도 없는 새벽 3시의 텅 빈 도로",
+            "[개념:추상] 믿었던 진실이 거짓으로 밝혀지는 순간",
+            "[오브젝트] 멈춰버린 회중시계"
+        ];
+
+        function generateResponse(input, lorebook, characters, style, useWildcard) {
+            const variations = [];
             
-            const styleLyrical = document.getElementById('style-lyrical');
-            const styleEpic = document.getElementById('style-epic');
-            const styleConcise = document.getElementById('style-concise');
-            const styleProfessional = document.getElementById('style-professional');
+            // Base context setup
+            let contextMsg = "";
+            let loreSummary = "";
+            if (lorebook.enabled && lorebook.text) {
+                loreSummary = lorebook.text.substring(0, 10);
+                contextMsg += ` [설정: ${loreSummary}...]`;
+            }
+            if (characters.enabled && characters.text1) {
+                const charName = characters.text1.split(',')[0].split(':')[1]?.trim() || "캐릭터";
+                contextMsg += ` [인물: ${charName}]`;
+            }
 
-            const wildcardToggle = document.getElementById('wildcard-toggle');
-            
-            const textInput = document.getElementById('text-input');
-            const textOutput = document.getElementById('text-output');
-            const generateButton = document.getElementById('generate-button');
+            // Variation 1: Narrative Expansion
+            let v1 = `<strong>[변주 1: 서사 확장]</strong>\n`;
+            if (style === "느와르") {
+                v1 += `짙은 어둠이 내려앉은 거리, ${input} 차가운 빗줄기만이 그 모습을 지켜보고 있었다.${contextMsg}`;
+            } else if (style === "동화풍") {
+                v1 += `옛날 아주 먼 옛날, ${input} 마치 마법처럼 신비로운 일이 일어났답니다.${contextMsg}`;
+            } else {
+                v1 += `${input} 그 순간, 공기의 흐름이 바뀌는 것이 느껴졌다. 예감은 틀리지 않았다.${contextMsg}`;
+            }
+            variations.push(v1);
 
-            generateButton.addEventListener('click', () => {
-                const input = textInput.value;
-                let outputLines = [];
-                let context = [];
+            // Variation 2: Emotional Depth
+            let v2 = `<strong>[변주 2: 감정의 깊이]</strong>\n`;
+            v2 += `숨을 죽이고 지켜보던 순간, ${input} 심장이 쿵쿵 뛰기 시작했다. 거부할 수 없는 운명의 장난 같았다. 도저히 믿을 수 없는 광경이었다.`;
+            variations.push(v2);
 
-                if (!input.trim()) {
-                    textOutput.value = "먼저 '글 입력용' 란에 예시 문장을 입력해주세요.";
-                    return;
+            // Variation 3: Dissonance (Wildcard)
+            let v3 = `<strong>[변주 3: 와일드카드(Wildcard)]</strong>\n`;
+            if (useWildcard) {
+                const randomWildcard = wildcardsData[Math.floor(Math.random() * wildcardsData.length)];
+                // Extract clean text removing brackets
+                const cleanWildcard = randomWildcard.replace(/\[.*?\]\s*/, ''); 
+                v3 += `<em class="text-indigo-600 block mb-2 text-sm">💡 색다른 관점 주입: ${randomWildcard}</em>`;
+                v3 += `마치 <strong>${cleanWildcard}</strong> 느낌이 들었다. ${input} 일반적인 챗봇이라면 하지 않았을 이질적인 표현이 내 사고를 확장시켰다.`;
+            } else {
+                v3 += `${input} (와일드카드가 비활성화되어 일상적인 흐름을 유지합니다.)`;
+            }
+            variations.push(v3);
+
+            return variations.join('\n\n');
+        }
+
+        // Event Listener
+        const generateBtn = document.getElementById('generate-btn');
+        const outputArea = document.getElementById('output-area');
+        const statusIndicator = document.getElementById('status-indicator');
+
+        generateBtn.addEventListener('click', () => {
+            const userInput = document.getElementById('user-input').value;
+            if (!userInput.trim()) { alert("문장을 입력해주세요."); return; }
+
+            // UI Loading
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 작성 중...';
+            statusIndicator.innerText = "Processing via Local LLM...";
+            statusIndicator.className = "text-xs text-blue-600 font-sans animate-pulse";
+            outputArea.innerHTML = '<div class="h-full flex items-center justify-center text-slate-400">AI가 문맥을 분석하고 있습니다...</div>';
+
+            // Gather Inputs
+            const lorebookState = {
+                enabled: document.getElementById('lorebook-toggle').checked,
+                text: document.getElementById('lorebook-input').value
+            };
+            const charState = {
+                enabled: document.getElementById('char-toggle').checked,
+                text1: document.getElementById('char1-input').value,
+                text2: document.getElementById('char2-input').value
+            };
+            const styleState = document.querySelector('input[name="style"]:checked')?.value;
+            const wildcardState = document.getElementById('wildcard-toggle').checked;
+
+            // Simulate Network Delay
+            setTimeout(() => {
+                const resultText = generateResponse(userInput, lorebookState, charState, styleState, wildcardState);
+                
+                // Render Result
+                const formattedOutput = resultText.split('\n\n').map((block, idx) => {
+                    return `<div class="mb-6 p-4 bg-white border-l-4 border-slate-800 shadow-sm transition-all duration-500 opacity-0 translate-y-4 animate-in" style="animation: slideUp 0.5s ease-out forwards ${idx * 0.2}s;">
+                        <div class="text-slate-800 leading-relaxed whitespace-pre-wrap">${block}</div>
+                    </div>`;
+                }).join('');
+
+                outputArea.innerHTML = formattedOutput;
+
+                // Add animation keyframes dynamically if not present
+                if (!document.getElementById('dynamic-styles')) {
+                    const style = document.createElement('style');
+                    style.id = 'dynamic-styles';
+                    style.innerHTML = `@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }`;
+                    document.head.appendChild(style);
                 }
 
-                textOutput.value = "LLaMA 3 8B (로컬) 생성 중...";
+                // Reset UI
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<i class="fa-solid fa-pen-nib"></i> 작성 시작';
+                statusIndicator.innerText = "Complete";
+                statusIndicator.className = "text-xs text-green-600 font-sans font-bold";
 
-                // Simulate API call delay
-                setTimeout(() => {
-                    let baseInput = input.includes("그가 방에 들어왔다") ? "그가 방에 들어왔다" : "밥을 먹었다";
-
-                    // 1. Lorebook 1 (세계관)
-                    if (lorebook1Toggle.checked && lorebook1Text.value.includes("마법")) {
-                        context.push("로어북1(마법 세계)");
-                        if(baseInput === "그가 방에 들어왔다") {
-                            outputLines.push("[세계관 적용] 그가 룬 문자가 새겨진 무거운 오크 문을 밀고 방에 들어왔습니다.");
-                        }
-                    }
-
-                    // 2. Lorebook 2 (캐릭터)
-                    if (lorebook2Toggle.checked && lorebook2Text.value.includes("카일")) {
-                        context.push("로어북2(카일)");
-                        if(baseInput === "그가 방에 들어왔다") {
-                            outputLines.push("[캐릭터 적용] '카일'이 그의 기계 의수를 삐걱거리며 방에 들어왔습니다.");
-                        }
-                    }
-
-                    // 3. Styles
-                    let styles = [];
-                    if (styleLyrical.checked) {
-                        styles.push("서정적");
-                        outputLines.push("[서정적] 창밖의 달빛을 등진 채, 그가 그림자처럼 방에 스며들었습니다.");
-                    }
-                    if (styleEpic.checked) {
-                        styles.push("웅장한");
-                        outputLines.push("[웅장함] 거대한 홀의 문이 열리며, 모두의 시선 속에 그가 위풍당당하게 들어왔습니다.");
-                    }
-                    if (styleConcise.checked) {
-                        styles.push("간결한");
-                        outputLines.push("[간결함] 그가 들어왔다.");
-                    }
-                    if (styleProfessional.checked) {
-                        styles.push("전문적");
-                        outputLines.push("[전문적] 대상 인물이 지정된 구역으로 진입함을 확인했습니다.");
-                    }
-                    if (styles.length > 0) {
-                        context.push(`스타일(${styles.join(',')})`);
-                    }
-                    
-                    // 4. Wildcard
-                    if (wildcardToggle.checked) {
-                        context.push("와일드카드(ON)");
-                        outputLines.push("[와일드카드] 방 안은 '고요한 심해'처럼 잠잠했고, 그는 그 정적 속으로 가라앉듯 들어왔습니다.");
-                    }
-                    
-                    if (outputLines.length === 0) {
-                        outputLines.push("AI가 기본 문장을 생성했습니다:\n" + (baseInput === "밥을 먹었다" ? "나는 밥을 먹었다." : "그는 방에 들어왔다."));
-                        context.push("활성화된 모듈 없음");
-                    }
-
-                    textOutput.value = `[적용된 모듈: ${context.join(' | ')}]\n\n` + outputLines.map((line, i) => `${i+1}. ${line}`).join('\n\n');
-
-                }, 800);
-            });
-
-            // Tab Logic
-            const tabNav = document.getElementById('tab-nav');
-            const tabContent = document.getElementById('tab-content');
-            const tabButtons = tabNav.querySelectorAll('.tab-button');
-            const tabContents = tabContent.querySelectorAll('.tab-content');
-
-            tabNav.addEventListener('click', (e) => {
-                const targetButton = e.target.closest('button');
-                if (!targetButton) return;
-
-                const tabId = targetButton.dataset.tab;
-
-                tabButtons.forEach(button => {
-                    button.classList.toggle('active', button === targetButton);
-                });
-
-                tabContents.forEach(content => {
-                    content.classList.toggle('active', content.id === `tab-${tabId}`);
-                });
-            });
+            }, 1500);
         });
+
+        // ============================================================
+        // 2. Smooth Scroll Logic
+        // ============================================================
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        }
     </script>
 </body>
 </html>
