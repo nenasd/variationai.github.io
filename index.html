@@ -13,12 +13,12 @@
 
         body {
             font-family: 'Pretendard', sans-serif;
-            background-color: #FDFBF7; /* App.css 배경색 반영 */
+            background-color: #FDFBF7;
             color: #1e293b;
         }
 
         .font-serif {
-            font-family: 'Playfair Display', serif; /* App.tsx 폰트 느낌 반영 */
+            font-family: 'Playfair Display', serif;
         }
 
         .section-header {
@@ -53,14 +53,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* Demo UI Styles (from App.tsx/index.css) */
-        .demo-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
         .input-field {
             width: 100%;
             background-color: #f8fafc;
@@ -91,12 +83,27 @@
             background-color: rgba(0,0,0,0.05);
         }
 
-        /* Chart Container */
         .chart-wrapper {
             position: relative;
             height: 300px;
             width: 100%;
         }
+        
+        .code-block {
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #333;
+        }
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-function { color: #dcdcaa; }
+        .code-comment { color: #6a9955; font-style: italic; }
     </style>
 </head>
 <body class="antialiased">
@@ -111,6 +118,7 @@
                 <div class="hidden md:flex space-x-2">
                     <a class="nav-link active" onclick="scrollToSection('overview')">개요 & 기획</a>
                     <a class="nav-link" onclick="scrollToSection('features')">핵심 기능</a>
+                    <a class="nav-link" onclick="scrollToSection('architecture')">기술 아키텍처</a>
                     <a class="nav-link" onclick="scrollToSection('demo')">Live 시연</a>
                     <a class="nav-link" onclick="scrollToSection('video')">시연 영상</a>
                 </div>
@@ -216,7 +224,130 @@
             </div>
         </section>
 
-        <!-- 3. Live Demo (Simulation) -->
+        <!-- 3. Tech Architecture & Core Code -->
+        <section id="architecture" class="scroll-mt-24">
+            <div class="section-header">
+                <h2 class="section-title">기술 아키텍처 및 핵심 로직</h2>
+                <p class="text-slate-500">Local LLM 기반 RAG 파이프라인 구조 및 구현 내역</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto space-y-12">
+                
+                <!-- === [NEW] Simple Architecture Diagram === -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 py-10 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                    
+                    <!-- Client Block -->
+                    <div class="flex flex-col items-center p-6 bg-slate-50 border border-slate-200 rounded-xl w-64 shadow-sm hover:shadow-md transition-all">
+                        <i class="fa-brands fa-react text-5xl text-blue-500 mb-4"></i>
+                        <h4 class="font-bold text-slate-800 text-lg">Client</h4>
+                        <span class="text-xs font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded mt-2">React + Tailwind</span>
+                        <p class="text-sm text-slate-500 text-center mt-3 leading-snug">
+                            사용자 UI/UX<br>
+                            모듈 제어 (Toggle)<br>
+                            스트리밍 응답 표시
+                        </p>
+                    </div>
+
+                    <!-- Arrow 1 -->
+                    <div class="flex flex-col items-center gap-1">
+                        <span class="text-xs text-slate-400 font-mono font-bold">JSON Req/Res</span>
+                        <div class="hidden md:flex items-center">
+                            <div class="w-3 h-3 rounded-full bg-slate-300"></div>
+                            <div class="h-1 w-16 bg-slate-300"></div>
+                            <i class="fa-solid fa-caret-right text-slate-300 text-xl -ml-1"></i>
+                        </div>
+                        <i class="fa-solid fa-arrow-down text-slate-300 text-2xl md:hidden"></i>
+                    </div>
+
+                    <!-- Server Block -->
+                    <div class="flex flex-col items-center p-6 bg-white border-2 border-indigo-100 rounded-xl w-64 shadow-md relative">
+                        <div class="absolute -top-3 bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">Core Logic</div>
+                        <i class="fa-brands fa-node text-5xl text-green-600 mb-4"></i>
+                        <h4 class="font-bold text-slate-800 text-lg">Server</h4>
+                        <span class="text-xs font-semibold bg-green-100 text-green-800 px-2 py-1 rounded mt-2">Node.js + Express</span>
+                        <div class="mt-4 w-full bg-indigo-50 p-2 rounded text-xs text-center border border-indigo-100">
+                            <i class="fa-solid fa-database text-indigo-400 mr-1"></i>
+                            <strong>RAG Data</strong><br>
+                            (Lorebook, Style, Wildcard)
+                        </div>
+                        <p class="text-sm text-slate-500 text-center mt-2 leading-snug">
+                            프롬프트 동적 조립<br>
+                            컨텍스트 주입
+                        </p>
+                    </div>
+
+                    <!-- Arrow 2 -->
+                    <div class="flex flex-col items-center gap-1">
+                        <span class="text-xs text-slate-400 font-mono font-bold">API Call</span>
+                        <div class="hidden md:flex items-center">
+                            <div class="w-3 h-3 rounded-full bg-slate-300"></div>
+                            <div class="h-1 w-16 bg-slate-300"></div>
+                            <i class="fa-solid fa-caret-right text-slate-300 text-xl -ml-1"></i>
+                        </div>
+                        <i class="fa-solid fa-arrow-down text-slate-300 text-2xl md:hidden"></i>
+                    </div>
+
+                    <!-- AI Block -->
+                    <div class="flex flex-col items-center p-6 bg-slate-800 border border-slate-700 rounded-xl w-64 shadow-lg text-white">
+                        <i class="fa-solid fa-microchip text-5xl text-blue-400 mb-4 animate-pulse"></i>
+                        <h4 class="font-bold text-white text-lg">Local LLM</h4>
+                        <span class="text-xs font-semibold bg-slate-700 text-slate-300 px-2 py-1 rounded mt-2">Ollama</span>
+                        <p class="text-sm text-slate-400 text-center mt-3 leading-snug">
+                            LLaMA 3 8B Instruct<br>
+                            텍스트 생성 & 추론<br>
+                            (Offline Environment)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Code Snippet -->
+                <div class="bg-gray-900 rounded-lg overflow-hidden shadow-xl border border-gray-700">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-800 border-b border-gray-700">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <span class="text-xs text-gray-400 font-mono flex items-center gap-2">
+                            <i class="fa-brands fa-js"></i> server/index.js (Backend Logic)
+                        </span>
+                    </div>
+                    <div class="code-block">
+<span class="code-keyword">app</span>.<span class="code-function">post</span>(<span class="code-string">'/api/generate'</span>, <span class="code-keyword">async</span> (req, res) => {
+  <span class="code-keyword">const</span> { lorebook1, characters, styles, wildcard, prompt } = req.body;
+
+  <span class="code-comment">// 1. 와일드카드 RAG: 무작위 영감 요소(데이터) 추출</span>
+  <span class="code-keyword">let</span> wildcardText = <span class="code-string">''</span>;
+  <span class="code-keyword">if</span> (wildcard) {
+    <span class="code-keyword">const</span> data = fs.<span class="code-function">readFileSync</span>(path.<span class="code-function">join</span>(__dirname, <span class="code-string">'data'</span>, <span class="code-string">'wildcards.txt'</span>), <span class="code-string">'utf8'</span>);
+    <span class="code-keyword">const</span> lines = data.<span class="code-function">split</span>(<span class="code-string">'\n'</span>).<span class="code-function">filter</span>(line => line.<span class="code-function">trim</span>() !== <span class="code-string">''</span>);
+    wildcardText = lines[Math.<span class="code-function">floor</span>(Math.<span class="code-function">random</span>() * lines.length)].<span class="code-function">trim</span>();
+  }
+
+  <span class="code-comment">// 2. 동적 프롬프트 엔지니어링 (Context Injection)</span>
+  <span class="code-keyword">let</span> finalPrompt = <span class="code-string">"사용자가 입력한 내용을 바탕으로, 문장을 풍성하게 각색하고 확장해 주세요...\n\n"</span>;
+
+  <span class="code-keyword">if</span> (lorebook1.enabled) finalPrompt += <span class="code-string">`[로어북 (설정)]\n${lorebook1.text}\n\n`</span>;
+  <span class="code-keyword">if</span> (styles.length > 0) finalPrompt += <span class="code-string">`[선호 문체]\n- ${styles.join(', ')}\n\n`</span>;
+  <span class="code-keyword">if</span> (wildcardText) finalPrompt += <span class="code-string">`[와일드카드 (영감 요소)]\n- "${wildcardText}"\n(이 문구의 분위기를 글에 은유적으로 녹여내세요.)\n\n`</span>;
+  
+  finalPrompt += <span class="code-string">`[사용자 입력 (초안)]\n${prompt}\n\n`</span>;
+
+  <span class="code-comment">// 3. Ollama API (Local LLM) 호출 및 스트리밍</span>
+  <span class="code-keyword">const</span> requestBody = JSON.<span class="code-function">stringify</span>({
+    model: <span class="code-string">"llama3:instruct"</span>,
+    prompt: finalPrompt,
+    stream: <span class="code-keyword">true</span>,
+  });
+  
+  <span class="code-comment">// ... (HTTP 요청 전송 및 응답 처리)</span>
+});
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Live Demo (Simulation) -->
         <section id="demo" class="scroll-mt-24">
             <div class="section-header">
                 <h2 class="section-title">기능 시연 (Live Demo)</h2>
@@ -329,7 +460,7 @@
             </div>
         </section>
 
-        <!-- 4. Demo Video -->
+        <!-- 5. Demo Video -->
         <section id="video" class="scroll-mt-24 mb-24">
             <div class="section-header">
                 <h2 class="section-title">시연 동영상</h2>
@@ -337,10 +468,7 @@
             </div>
             
             <div class="max-w-4xl mx-auto aspect-video bg-black rounded-xl shadow-2xl overflow-hidden border border-slate-800">
-                <video controls class="w-full h-full object-cover">
-                    <source src="231b73d5-2bc5-444b-9eda-f89877f63e55_0.mp4" type="video/mp4">
-                    브라우저가 동영상을 지원하지 않습니다.
-                </video>
+                <iframe class="w-full h-full" src="https://drive.google.com/file/d/1vcHXdy33oG-izzBze5eOKr5-FqpHColP/preview" allow="autoplay"></iframe>
             </div>
         </section>
 
