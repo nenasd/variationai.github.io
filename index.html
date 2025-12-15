@@ -15,6 +15,7 @@
             font-family: 'Pretendard', sans-serif;
             background-color: #FDFBF7;
             color: #1e293b;
+            font-size: 18px; /* 기본 폰트 사이즈 증대 */
         }
 
         .font-serif {
@@ -22,15 +23,15 @@
         }
 
         .section-header {
-            margin-bottom: 3rem;
+            margin-bottom: 4rem; /* 여백 증대 */
             text-align: center;
         }
 
         .section-title {
-            font-size: 2rem;
+            font-size: 2.5rem; /* 제목 크기 증대 */
             font-weight: 800;
             color: #1e293b;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: inline-block;
             position: relative;
         }
@@ -38,13 +39,14 @@
         .btn-primary {
             background-color: #1e293b;
             color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 4px;
+            padding: 1rem 2.5rem; /* 버튼 패딩 증대 */
+            border-radius: 6px;
+            font-size: 1.1rem; /* 버튼 폰트 증대 */
             font-weight: 600;
             transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
         
         .btn-primary:hover {
@@ -57,8 +59,9 @@
             width: 100%;
             background-color: #f8fafc;
             border: 1px solid #cbd5e1;
-            padding: 1rem;
-            border-radius: 4px;
+            padding: 1.25rem; /* 입력창 패딩 증대 */
+            font-size: 1.1rem; /* 입력 폰트 증대 */
+            border-radius: 6px;
             transition: all 0.2s;
             resize: none;
         }
@@ -71,11 +74,12 @@
 
         .nav-link {
             cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 0.75rem 1.5rem; /* 네비게이션 링크 영역 증대 */
+            border-radius: 6px;
             transition: background 0.2s;
             color: #64748b;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
         
         .nav-link:hover, .nav-link.active {
@@ -85,18 +89,18 @@
 
         .chart-wrapper {
             position: relative;
-            height: 300px;
+            height: 400px; /* 차트 높이 증대 */
             width: 100%;
         }
         
         .code-block {
             font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-            font-size: 0.85rem;
-            line-height: 1.5;
+            font-size: 1rem; /* 코드 폰트 증대 */
+            line-height: 1.6;
             background-color: #1e1e1e;
             color: #d4d4d4;
-            padding: 1.5rem;
-            border-radius: 8px;
+            padding: 2rem; /* 코드 블록 패딩 증대 */
+            border-radius: 10px;
             overflow-x: auto;
             border: 1px solid #333;
         }
@@ -104,120 +108,128 @@
         .code-string { color: #ce9178; }
         .code-function { color: #dcdcaa; }
         .code-comment { color: #6a9955; font-style: italic; }
+
+        /* 커스텀 토글 스위치 크기 조정 */
+        .toggle-checkbox {
+            width: 3.5rem;
+            height: 2rem;
+        }
+        
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Navigation -->
     <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center gap-2">
-                    <span class="font-serif font-bold text-xl text-slate-900">Project Variation</span>
+        <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex items-center gap-3">
+                    <span class="font-serif font-bold text-3xl text-slate-900">Project Variation</span>
                 </div>
-                <div class="hidden md:flex space-x-2">
+                <div class="hidden md:flex space-x-4">
                     <a class="nav-link active" onclick="scrollToSection('overview')">개요 & 기획</a>
                     <a class="nav-link" onclick="scrollToSection('features')">핵심 기능</a>
                     <a class="nav-link" onclick="scrollToSection('architecture')">기술 아키텍처</a>
                     <a class="nav-link" onclick="scrollToSection('demo')">Live 시연</a>
                     <a class="nav-link" onclick="scrollToSection('video')">시연 영상</a>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-4">
                     <a href="https://github.com/your-username/project-variation" target="_blank" class="text-slate-600 hover:text-black transition-colors">
-                        <i class="fa-brands fa-github fa-lg"></i>
+                        <i class="fa-brands fa-github fa-2x"></i>
                     </a>
-                    <span class="text-sm font-bold bg-slate-100 px-3 py-1 rounded-full text-slate-600">어승기</span>
+                    <span class="text-lg font-bold bg-slate-100 px-4 py-2 rounded-full text-slate-600">어승기</span>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-32">
+    <!-- Main Container -->
+    <main class="max-w-screen-2xl mx-auto px-6 lg:px-12 py-16 space-y-40">
 
         <!-- 1. Overview & Hero -->
-        <section id="overview" class="pt-10 text-center">
-            <h1 class="text-5xl md:text-6xl font-serif font-bold text-slate-900 mb-6 leading-tight">
+        <section id="overview" class="pt-16 text-center">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-slate-900 mb-8 leading-tight">
                 당신의 문장에<br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900">새로운 관점(Variation)</span>을 더하다
             </h1>
-            <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p class="text-2xl md:text-3xl text-slate-600 max-w-4xl mx-auto mb-14 leading-relaxed font-light">
                 정형화된 답변만 내놓는 챗봇이 아닙니다. <br>
-                <strong>와일드카드(Wildcard)</strong>와 <strong>RAG</strong>를 통해 일반적인 AI에서는 얻을 수 없는<br>
+                <strong>와일드카드</strong>와 <strong>RAG</strong>를 통해 일반적인 AI에서는 얻을 수 없는<br>
                 <strong>예상 밖의 통찰과 서사적 영감</strong>을 제공하는 작문 파트너입니다.
             </p>
             
-            <div class="flex justify-center gap-4">
+            <div class="flex justify-center gap-6">
                 <a href="https://github.com/your-repo-link" target="_blank" class="btn-primary">
-                    <i class="fa-brands fa-github"></i> GitHub 코드 보기 (배포)
+                    <i class="fa-brands fa-github fa-lg"></i> GitHub 코드 보기 (배포)
                 </a>
-                <button onclick="scrollToSection('demo')" class="px-8 py-3 bg-white text-slate-700 font-semibold rounded border border-slate-300 hover:bg-slate-50 transition-colors">
+                <button onclick="scrollToSection('demo')" class="px-10 py-4 bg-white text-slate-700 font-bold text-xl rounded-lg border-2 border-slate-300 hover:bg-slate-50 transition-colors">
                     기능 체험하기
                 </button>
             </div>
 
-            <!-- Planning & Dev Details -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-20 text-left">
-                <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-bullseye text-blue-600"></i> 차별화 포인트 (Core Value)
+            <!-- Planning & Dev Details (수정됨) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-24 text-left">
+                <div class="bg-white p-10 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-bullseye text-blue-600 text-3xl"></i> 목표 기능
                     </h3>
-                    <p class="text-slate-600 leading-relaxed mb-4">
+                    <p class="text-slate-600 text-lg leading-loose mb-6">
                         기존 챗봇은 '정답'과 '일관성'에 집중하여 창의적인 글쓰기에는 한계가 있었습니다. <strong>Project Variation</strong>은 이를 극복하기 위해 <strong>'와일드카드 RAG'</strong> 시스템을 도입했습니다.
                     </p>
-                    <ul class="list-disc list-inside text-slate-600 text-sm space-y-2">
+                    <ul class="list-disc list-inside text-slate-600 text-lg space-y-3">
                         <li><strong>의도된 이질성:</strong> 문맥과 무관한 낯선 감각 정보를 주입하여 사고의 틀을 깹니다.</li>
                         <li><strong>사용자 주도 제어:</strong> AI의 생성 방향(세계관, 캐릭터, 문체, 의외성)을 사용자가 직접 모듈 단위로 조율합니다.</li>
                     </ul>
                 </div>
-                <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-code text-green-600"></i> 개발 내용 (Tech Stack)
+                <div class="bg-white p-10 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-code text-green-600 text-3xl"></i> 개발 기능
                     </h3>
-                    <ul class="space-y-2 text-slate-600 text-sm">
-                        <li><strong>Frontend:</strong> React, TypeScript, Tailwind CSS (반응형 UI)</li>
-                        <li><strong>Backend:</strong> Node.js, Express (3중 RAG 파이프라인 구축)</li>
-                        <li><strong>AI Engine:</strong> Ollama (Local LLaMA 3 8B Instruct 모델)</li>
-                        <li><strong>Feature:</strong> 동적 프롬프트 엔지니어링, 실시간 스트리밍 응답</li>
+                    <ul class="space-y-4 text-slate-600 text-lg">
+                        <li class="flex items-center gap-3"><i class="fa-brands fa-react text-blue-500"></i> <strong>Frontend:</strong> React, TypeScript, Tailwind CSS (반응형 UI)</li>
+                        <li class="flex items-center gap-3"><i class="fa-brands fa-node text-green-600"></i> <strong>Backend:</strong> Node.js, Express (3중 RAG 파이프라인 구축)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-microchip text-slate-700"></i> <strong>AI Engine:</strong> Ollama (Local LLaMA 3 8B Instruct 모델)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-bolt text-yellow-500"></i> <strong>Feature:</strong> 동적 프롬프트 엔지니어링, 실시간 스트리밍 응답</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <!-- 2. Key Features -->
-        <section id="features" class="scroll-mt-24">
+        <section id="features" class="scroll-mt-32">
             <div class="section-header">
-                <h2 class="section-title">핵심 기능 (Key Features)</h2>
-                <p class="text-slate-500">ComfyUI의 모듈화 철학을 반영한 직관적인 'AI 믹서' 인터페이스</p>
+                <h2 class="section-title">핵심 기능</h2>
+                <p class="text-xl text-slate-500 mt-2">ComfyUI의 모듈화 철학을 반영한 직관적인 'AI 믹서' 인터페이스</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <!-- Feature 1 -->
-                <div class="bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow">
-                    <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-white text-xl mb-6">
+                <div class="bg-white p-10 rounded-2xl border border-slate-200 hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 bg-slate-900 rounded-xl flex items-center justify-center text-white text-3xl mb-8">
                         <i class="fa-solid fa-sliders"></i>
                     </div>
-                    <h3 class="text-lg font-bold mb-3">AI 믹서 (Mixer) UI</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
+                    <h3 class="text-2xl font-bold mb-4">AI 믹서 UI</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">
                         복잡한 AI 파라미터를 오디오 믹서처럼 직관적으로 제어할 수 있습니다. <strong>각 기능을 모듈화하여 ON/OFF 스위치와 슬라이더로 손쉽게 조작</strong>하며, 결과물에 미치는 영향을 즉각적으로 확인할 수 있는 사용자 친화적 디자인을 적용했습니다.
                     </p>
                 </div>
                 <!-- Feature 2 -->
-                <div class="bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow">
-                    <div class="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-white text-xl mb-6">
+                <div class="bg-white p-10 rounded-2xl border border-slate-200 hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 bg-slate-900 rounded-xl flex items-center justify-center text-white text-3xl mb-8">
                         <i class="fa-solid fa-book-journal-whills"></i>
                     </div>
-                    <h3 class="text-lg font-bold mb-3">로어북 (Lorebook)</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
+                    <h3 class="text-2xl font-bold mb-4">로어북</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">
                         사용자가 정의한 고유한 세계관과 캐릭터 설정을 RAG로 주입합니다. AI가 이 설정을 철저히 준수하며 서사를 전개하도록 강제합니다.
                     </p>
                 </div>
                 <!-- Feature 3 -->
-                <div class="bg-white p-8 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow bg-slate-50">
-                    <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-xl mb-6">
+                <div class="bg-white p-10 rounded-2xl border border-slate-200 hover:shadow-xl transition-shadow bg-slate-50">
+                    <div class="w-16 h-16 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-3xl mb-8">
                         <i class="fa-solid fa-dice-d20"></i>
                     </div>
-                    <h3 class="text-lg font-bold mb-3 text-indigo-900">와일드카드 (Wildcard)</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
+                    <h3 class="text-2xl font-bold mb-4 text-indigo-900">와일드카드</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">
                         <strong>프로젝트의 핵심 차별점.</strong> 예측 불가능한 '감각/오브젝트' 데이터를 무작위로 추출해 문맥에 충돌시킴으로써, 평범한 문장에 독창적인 관점을 부여합니다.
                     </p>
                 </div>
@@ -225,23 +237,23 @@
         </section>
 
         <!-- 3. Tech Architecture & Core Code -->
-        <section id="architecture" class="scroll-mt-24">
+        <section id="architecture" class="scroll-mt-32">
             <div class="section-header">
                 <h2 class="section-title">기술 아키텍처 및 핵심 로직</h2>
-                <p class="text-slate-500">Local LLM 기반 RAG 파이프라인 구조 및 구현 내역</p>
+                <p class="text-xl text-slate-500 mt-2">Local LLM 기반 RAG 파이프라인 구조 및 구현 내역</p>
             </div>
 
-            <div class="max-w-6xl mx-auto space-y-12">
+            <div class="max-w-screen-xl mx-auto space-y-16">
                 
-                <!-- === [NEW] Simple Architecture Diagram === -->
-                <div class="flex flex-col md:flex-row items-center justify-center gap-6 py-10 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                <!-- Diagram -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-10 py-16 bg-white border border-slate-200 rounded-3xl shadow-sm">
                     
                     <!-- Client Block -->
-                    <div class="flex flex-col items-center p-6 bg-slate-50 border border-slate-200 rounded-xl w-64 shadow-sm hover:shadow-md transition-all">
-                        <i class="fa-brands fa-react text-5xl text-blue-500 mb-4"></i>
-                        <h4 class="font-bold text-slate-800 text-lg">Client</h4>
-                        <span class="text-xs font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded mt-2">React + Tailwind</span>
-                        <p class="text-sm text-slate-500 text-center mt-3 leading-snug">
+                    <div class="flex flex-col items-center p-8 bg-slate-50 border border-slate-200 rounded-2xl w-80 shadow-sm hover:shadow-md transition-all">
+                        <i class="fa-brands fa-react text-7xl text-blue-500 mb-6"></i>
+                        <h4 class="font-bold text-slate-800 text-2xl">Client</h4>
+                        <span class="text-sm font-semibold bg-blue-100 text-blue-800 px-3 py-1.5 rounded mt-3">React + Tailwind</span>
+                        <p class="text-base text-slate-500 text-center mt-4 leading-relaxed">
                             사용자 UI/UX<br>
                             모듈 제어 (Toggle)<br>
                             스트리밍 응답 표시
@@ -249,50 +261,50 @@
                     </div>
 
                     <!-- Arrow 1 -->
-                    <div class="flex flex-col items-center gap-1">
-                        <span class="text-xs text-slate-400 font-mono font-bold">JSON Req/Res</span>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-sm text-slate-400 font-mono font-bold">JSON Req/Res</span>
                         <div class="hidden md:flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-slate-300"></div>
-                            <div class="h-1 w-16 bg-slate-300"></div>
-                            <i class="fa-solid fa-caret-right text-slate-300 text-xl -ml-1"></i>
+                            <div class="w-4 h-4 rounded-full bg-slate-300"></div>
+                            <div class="h-1.5 w-24 bg-slate-300"></div>
+                            <i class="fa-solid fa-caret-right text-slate-300 text-3xl -ml-2"></i>
                         </div>
-                        <i class="fa-solid fa-arrow-down text-slate-300 text-2xl md:hidden"></i>
+                        <i class="fa-solid fa-arrow-down text-slate-300 text-4xl md:hidden"></i>
                     </div>
 
                     <!-- Server Block -->
-                    <div class="flex flex-col items-center p-6 bg-white border-2 border-indigo-100 rounded-xl w-64 shadow-md relative">
-                        <div class="absolute -top-3 bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">Core Logic</div>
-                        <i class="fa-brands fa-node text-5xl text-green-600 mb-4"></i>
-                        <h4 class="font-bold text-slate-800 text-lg">Server</h4>
-                        <span class="text-xs font-semibold bg-green-100 text-green-800 px-2 py-1 rounded mt-2">Node.js + Express</span>
-                        <div class="mt-4 w-full bg-indigo-50 p-2 rounded text-xs text-center border border-indigo-100">
-                            <i class="fa-solid fa-database text-indigo-400 mr-1"></i>
+                    <div class="flex flex-col items-center p-8 bg-white border-2 border-indigo-100 rounded-2xl w-80 shadow-md relative">
+                        <div class="absolute -top-4 bg-indigo-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-sm">Core Logic</div>
+                        <i class="fa-brands fa-node text-7xl text-green-600 mb-6"></i>
+                        <h4 class="font-bold text-slate-800 text-2xl">Server</h4>
+                        <span class="text-sm font-semibold bg-green-100 text-green-800 px-3 py-1.5 rounded mt-3">Node.js + Express</span>
+                        <div class="mt-6 w-full bg-indigo-50 p-3 rounded text-sm text-center border border-indigo-100">
+                            <i class="fa-solid fa-database text-indigo-400 mr-2"></i>
                             <strong>RAG Data</strong><br>
                             (Lorebook, Style, Wildcard)
                         </div>
-                        <p class="text-sm text-slate-500 text-center mt-2 leading-snug">
+                        <p class="text-base text-slate-500 text-center mt-4 leading-relaxed">
                             프롬프트 동적 조립<br>
                             컨텍스트 주입
                         </p>
                     </div>
 
                     <!-- Arrow 2 -->
-                    <div class="flex flex-col items-center gap-1">
-                        <span class="text-xs text-slate-400 font-mono font-bold">API Call</span>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-sm text-slate-400 font-mono font-bold">API Call</span>
                         <div class="hidden md:flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-slate-300"></div>
-                            <div class="h-1 w-16 bg-slate-300"></div>
-                            <i class="fa-solid fa-caret-right text-slate-300 text-xl -ml-1"></i>
+                            <div class="w-4 h-4 rounded-full bg-slate-300"></div>
+                            <div class="h-1.5 w-24 bg-slate-300"></div>
+                            <i class="fa-solid fa-caret-right text-slate-300 text-3xl -ml-2"></i>
                         </div>
-                        <i class="fa-solid fa-arrow-down text-slate-300 text-2xl md:hidden"></i>
+                        <i class="fa-solid fa-arrow-down text-slate-300 text-4xl md:hidden"></i>
                     </div>
 
                     <!-- AI Block -->
-                    <div class="flex flex-col items-center p-6 bg-slate-800 border border-slate-700 rounded-xl w-64 shadow-lg text-white">
-                        <i class="fa-solid fa-microchip text-5xl text-blue-400 mb-4 animate-pulse"></i>
-                        <h4 class="font-bold text-white text-lg">Local LLM</h4>
-                        <span class="text-xs font-semibold bg-slate-700 text-slate-300 px-2 py-1 rounded mt-2">Ollama</span>
-                        <p class="text-sm text-slate-400 text-center mt-3 leading-snug">
+                    <div class="flex flex-col items-center p-8 bg-slate-800 border border-slate-700 rounded-2xl w-80 shadow-lg text-white">
+                        <i class="fa-solid fa-microchip text-7xl text-blue-400 mb-6 animate-pulse"></i>
+                        <h4 class="font-bold text-white text-2xl">Local LLM</h4>
+                        <span class="text-sm font-semibold bg-slate-700 text-slate-300 px-3 py-1.5 rounded mt-3">Ollama</span>
+                        <p class="text-base text-slate-400 text-center mt-4 leading-relaxed">
                             LLaMA 3 8B Instruct<br>
                             텍스트 생성 & 추론<br>
                             (Offline Environment)
@@ -301,18 +313,18 @@
                 </div>
 
                 <!-- Code Snippet -->
-                <div class="bg-gray-900 rounded-lg overflow-hidden shadow-xl border border-gray-700">
-                    <div class="flex items-center justify-between px-4 py-3 bg-gray-800 border-b border-gray-700">
-                        <div class="flex gap-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                <div class="bg-gray-900 rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+                    <div class="flex items-center justify-between px-6 py-4 bg-gray-800 border-b border-gray-700">
+                        <div class="flex gap-3">
+                            <div class="w-4 h-4 rounded-full bg-red-500"></div>
+                            <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+                            <div class="w-4 h-4 rounded-full bg-green-500"></div>
                         </div>
-                        <span class="text-xs text-gray-400 font-mono flex items-center gap-2">
+                        <span class="text-sm text-gray-400 font-mono flex items-center gap-2">
                             <i class="fa-brands fa-js"></i> server/index.js (Backend Logic)
                         </span>
                     </div>
-                    <div class="code-block">
+                    <div class="code-block p-8">
 <span class="code-keyword">app</span>.<span class="code-function">post</span>(<span class="code-string">'/api/generate'</span>, <span class="code-keyword">async</span> (req, res) => {
   <span class="code-keyword">const</span> { lorebook1, characters, styles, wildcard, prompt } = req.body;
 
@@ -348,110 +360,110 @@
         </section>
 
         <!-- 4. Live Demo (Simulation) -->
-        <section id="demo" class="scroll-mt-24">
+        <section id="demo" class="scroll-mt-32">
             <div class="section-header">
-                <h2 class="section-title">기능 시연 (Live Demo)</h2>
-                <p class="text-slate-500">실제 구현된 <code>App.tsx</code>의 UI와 RAG 로직을 시뮬레이션한 <strong>맛보기(Preview)</strong>입니다.</p>
-                <p class="text-xs text-slate-400 mt-1">* 서버 연결 없이 동작하도록 재구성된 버전입니다.</p>
+                <h2 class="section-title">기능 시연</h2>
+                <p class="text-xl text-slate-500 mt-2">실제 구현된 <code>App.tsx</code>의 UI와 RAG 로직을 시뮬레이션한 <strong>맛보기</strong>입니다.</p>
+                <p class="text-base text-slate-400 mt-1">* 서버 연결 없이 동작하도록 재구성된 버전입니다.</p>
             </div>
 
-            <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden border border-slate-200">
+            <div class="max-w-screen-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
                 <!-- App Header Simulation -->
-                <div class="bg-[#FDFBF7] p-8 border-b border-slate-100 text-center">
-                    <h3 class="text-3xl font-serif font-bold text-slate-900 mb-2">Project Variation Console</h3>
-                    <p class="text-slate-500 font-serif italic text-sm">당신의 상상, 세 가지 이야기로 피어나다.</p>
+                <div class="bg-[#FDFBF7] p-10 border-b border-slate-100 text-center">
+                    <h3 class="text-4xl font-serif font-bold text-slate-900 mb-3">Project Variation Console</h3>
+                    <p class="text-slate-500 font-serif italic text-lg">당신의 상상, 세 가지 이야기로 피어나다.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[600px]">
-                    <!-- Control Panel -->
-                    <div class="lg:col-span-5 bg-slate-50 border-r border-slate-200 p-6 space-y-8 overflow-y-auto max-h-[800px]">
+                <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[800px]">
+                    <!-- Control Panel (Expanded) -->
+                    <div class="lg:col-span-5 bg-slate-50 border-r border-slate-200 p-10 space-y-10 overflow-y-auto max-h-[1000px]">
                         
                         <!-- Lorebook -->
-                        <div class="space-y-2">
+                        <div class="space-y-4">
                             <div class="flex justify-between items-center">
-                                <h4 class="font-serif font-bold text-slate-800 border-l-4 border-slate-800 pl-3">로어북 (설정)</h4>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" id="lorebook-toggle" class="w-4 h-4 accent-slate-800" checked>
-                                    <span class="text-xs font-bold text-slate-600">ON</span>
+                                <h4 class="font-serif font-bold text-slate-800 text-xl border-l-8 border-slate-800 pl-4">로어북 (설정)</h4>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="lorebook-toggle" class="w-6 h-6 accent-slate-800" checked>
+                                    <span class="text-sm font-bold text-slate-600">ON</span>
                                 </label>
                             </div>
-                            <textarea id="lorebook-input" rows="3" class="input-field text-sm" placeholder="세계관 설정을 입력하세요...">이 세계는 마법과 기계공학이 공존하며, 하늘에는 두 개의 붉은 달이 떠 있다.</textarea>
+                            <textarea id="lorebook-input" rows="4" class="input-field text-base" placeholder="세계관 설정을 입력하세요...">이 세계는 마법과 기계공학이 공존하며, 하늘에는 두 개의 붉은 달이 떠 있다.</textarea>
                         </div>
 
                         <!-- Character (NEW) -->
-                        <div class="space-y-2">
+                        <div class="space-y-4">
                             <div class="flex justify-between items-center">
-                                <h4 class="font-serif font-bold text-slate-800 border-l-4 border-slate-800 pl-3">캐릭터 설정</h4>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" id="char-toggle" class="w-4 h-4 accent-slate-800" checked>
-                                    <span class="text-xs font-bold text-slate-600">ON</span>
+                                <h4 class="font-serif font-bold text-slate-800 text-xl border-l-8 border-slate-800 pl-4">캐릭터 설정</h4>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="char-toggle" class="w-6 h-6 accent-slate-800" checked>
+                                    <span class="text-sm font-bold text-slate-600">ON</span>
                                 </label>
                             </div>
-                            <div class="space-y-2">
-                                <textarea id="char1-input" rows="2" class="input-field text-sm" placeholder="캐릭터 1: 이름, 성격, 특징...">이름: 카일, 성격: 냉소적이고 과묵함, 특징: 오른팔이 기계 의수로 되어 있음.</textarea>
-                                <textarea id="char2-input" rows="2" class="input-field text-sm" placeholder="캐릭터 2 (선택): 이름, 성격...">이름: 엘라, 성격: 호기심 많고 활발함, 특징: 고대 언어를 해석할 줄 앎.</textarea>
+                            <div class="space-y-3">
+                                <textarea id="char1-input" rows="3" class="input-field text-base" placeholder="캐릭터 1: 이름, 성격, 특징...">이름: 카일, 성격: 냉소적이고 과묵함, 특징: 오른팔이 기계 의수로 되어 있음.</textarea>
+                                <textarea id="char2-input" rows="3" class="input-field text-base" placeholder="캐릭터 2 (선택): 이름, 성격...">이름: 엘라, 성격: 호기심 많고 활발함, 특징: 고대 언어를 해석할 줄 앎.</textarea>
                             </div>
                         </div>
 
                         <!-- Style -->
-                        <div class="space-y-2">
-                            <h4 class="font-serif font-bold text-slate-800 border-l-4 border-slate-800 pl-3">문체 선택</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <label class="cursor-pointer px-3 py-1 rounded-full border border-slate-200 bg-white text-xs has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
+                        <div class="space-y-4">
+                            <h4 class="font-serif font-bold text-slate-800 text-xl border-l-8 border-slate-800 pl-4">문체 선택</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="cursor-pointer px-5 py-2.5 rounded-full border border-slate-200 bg-white text-base has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
                                     <input type="radio" name="style" value="느와르" class="hidden" checked> 느와르
                                 </label>
-                                <label class="cursor-pointer px-3 py-1 rounded-full border border-slate-200 bg-white text-xs has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
+                                <label class="cursor-pointer px-5 py-2.5 rounded-full border border-slate-200 bg-white text-base has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
                                     <input type="radio" name="style" value="건조한" class="hidden"> 건조한
                                 </label>
-                                <label class="cursor-pointer px-3 py-1 rounded-full border border-slate-200 bg-white text-xs has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
+                                <label class="cursor-pointer px-5 py-2.5 rounded-full border border-slate-200 bg-white text-base has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
                                     <input type="radio" name="style" value="동화풍" class="hidden"> 동화풍
                                 </label>
-                                <label class="cursor-pointer px-3 py-1 rounded-full border border-slate-200 bg-white text-xs has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
+                                <label class="cursor-pointer px-5 py-2.5 rounded-full border border-slate-200 bg-white text-base has-[:checked]:bg-slate-800 has-[:checked]:text-white transition-colors">
                                     <input type="radio" name="style" value="웅장한" class="hidden"> 웅장한
                                 </label>
                             </div>
                         </div>
 
                         <!-- Wildcard -->
-                        <div class="space-y-2 pt-4 border-t border-slate-200">
-                            <div class="flex justify-between items-center bg-indigo-50 p-3 rounded-md border border-indigo-100">
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-serif font-bold text-indigo-900">와일드카드 (Wildcard)</h4>
+                        <div class="space-y-4 pt-6 border-t border-slate-200">
+                            <div class="flex justify-between items-center bg-indigo-50 p-5 rounded-xl border border-indigo-100">
+                                <div class="flex items-center gap-3">
+                                    <h4 class="font-serif font-bold text-indigo-900 text-xl">와일드카드</h4>
                                 </div>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" id="wildcard-toggle" class="w-4 h-4 accent-indigo-600" checked>
-                                    <span class="text-xs font-bold text-indigo-700">ON</span>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="wildcard-toggle" class="w-6 h-6 accent-indigo-600" checked>
+                                    <span class="text-sm font-bold text-indigo-700">ON</span>
                                 </label>
                             </div>
-                            <p class="text-xs text-slate-500 px-1">
+                            <p class="text-base text-slate-500 px-2 leading-relaxed">
                                 * <code>data/wildcards.txt</code>의 데이터를 사용하여 예상치 못한 관점을 주입합니다.
                             </p>
                         </div>
                     </div>
 
                     <!-- Input/Output Panel -->
-                    <div class="lg:col-span-7 p-8 flex flex-col bg-white">
-                        <div class="mb-6 relative">
-                            <h4 class="font-serif font-bold text-slate-800 mb-3 flex items-center gap-2">
-                                <span class="w-2 h-6 bg-slate-800 block"></span> 작성 요청
+                    <div class="lg:col-span-7 p-10 flex flex-col bg-white">
+                        <div class="mb-10 relative">
+                            <h4 class="font-serif font-bold text-slate-800 mb-4 flex items-center gap-3 text-xl">
+                                <span class="w-2 h-8 bg-slate-800 block"></span> 작성 요청
                             </h4>
-                            <textarea id="user-input" rows="4" class="input-field text-lg resize-none shadow-sm mb-4" placeholder="어떤 이야기를 쓰고 싶으신가요?">그가 방에 들어왔다.</textarea>
+                            <textarea id="user-input" rows="5" class="input-field text-xl resize-none shadow-sm mb-6" placeholder="어떤 이야기를 쓰고 싶으신가요?">그가 방에 들어왔다.</textarea>
                             <div class="text-right">
-                                <button id="generate-btn" class="btn-primary">
+                                <button id="generate-btn" class="btn-primary text-lg">
                                     <i class="fa-solid fa-pen-nib"></i> 작성 시작
                                 </button>
                             </div>
                         </div>
 
-                        <div class="flex-grow flex flex-col pt-6 border-t border-slate-100">
-                            <h4 class="font-serif font-bold text-slate-800 mb-3 flex items-center gap-2 justify-between">
-                                <div><span class="w-2 h-6 bg-slate-800 inline-block mr-2 align-middle"></span>결과물 (3가지 변주)</div>
-                                <span id="status-indicator" class="text-xs font-normal text-slate-400 font-sans">Ready</span>
+                        <div class="flex-grow flex flex-col pt-10 border-t border-slate-100">
+                            <h4 class="font-serif font-bold text-slate-800 mb-4 flex items-center gap-3 justify-between text-xl">
+                                <div><span class="w-2 h-8 bg-slate-800 inline-block mr-3 align-middle"></span>결과물 (3가지 변주)</div>
+                                <span id="status-indicator" class="text-base font-normal text-slate-400 font-sans">Ready</span>
                             </h4>
                             
-                            <div id="output-area" class="flex-grow bg-[#FDFBF7] rounded-lg border border-slate-200 p-6 overflow-y-auto space-y-6 font-serif text-slate-700 leading-loose min-h-[300px]">
-                                <div class="text-center text-slate-300 mt-20">
-                                    <p>입력된 내용을 바탕으로 새로운 이야기가 이곳에 피어납니다.</p>
+                            <div id="output-area" class="flex-grow bg-[#FDFBF7] rounded-xl border border-slate-200 p-8 overflow-y-auto space-y-8 font-serif text-slate-700 leading-loose min-h-[400px] text-lg">
+                                <div class="text-center text-slate-300 mt-28">
+                                    <p class="text-xl">입력된 내용을 바탕으로 새로운 이야기가 이곳에 피어납니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -461,13 +473,13 @@
         </section>
 
         <!-- 5. Demo Video -->
-        <section id="video" class="scroll-mt-24 mb-24">
+        <section id="video" class="scroll-mt-32 mb-40">
             <div class="section-header">
                 <h2 class="section-title">시연 동영상</h2>
-                <p class="text-slate-500">실제 로컬 환경에서의 구동 및 활용 예시</p>
+                <p class="text-xl text-slate-500 mt-2">실제 로컬 환경에서의 구동 및 활용 예시</p>
             </div>
             
-            <div class="max-w-4xl mx-auto aspect-video bg-black rounded-xl shadow-2xl overflow-hidden border border-slate-800">
+            <div class="max-w-6xl mx-auto aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden border border-slate-800">
                 <iframe class="w-full h-full" src="https://drive.google.com/file/d/1vcHXdy33oG-izzBze5eOKr5-FqpHColP/preview" allow="autoplay"></iframe>
             </div>
         </section>
@@ -475,13 +487,13 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-12 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-slate-800 font-serif font-bold text-lg mb-2">Project Variation</p>
-            <p class="text-slate-500 text-sm">2025-1 Semester Final Project • Developer: 어승기</p>
-            <div class="mt-4 flex justify-center gap-4">
-                <a href="#" class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-brands fa-github"></i></a>
-                <a href="#" class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-solid fa-envelope"></i></a>
+    <footer class="bg-white border-t border-gray-200 py-16 mt-20">
+        <div class="max-w-screen-xl mx-auto px-6 text-center">
+            <p class="text-slate-800 font-serif font-bold text-2xl mb-3">Project Variation</p>
+            <p class="text-slate-500 text-lg">2025-1 Semester Final Project • Developer: 어승기</p>
+            <div class="mt-6 flex justify-center gap-6">
+                <a href="#" class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-brands fa-github fa-2x"></i></a>
+                <a href="#" class="text-slate-400 hover:text-slate-900 transition-colors"><i class="fa-solid fa-envelope fa-2x"></i></a>
             </div>
         </div>
     </footer>
@@ -534,12 +546,12 @@
             variations.push(v2);
 
             // Variation 3: Dissonance (Wildcard)
-            let v3 = `<strong>[변주 3: 와일드카드(Wildcard)]</strong>\n`;
+            let v3 = `<strong>[변주 3: 와일드카드]</strong>\n`;
             if (useWildcard) {
                 const randomWildcard = wildcardsData[Math.floor(Math.random() * wildcardsData.length)];
                 // Extract clean text removing brackets
                 const cleanWildcard = randomWildcard.replace(/\[.*?\]\s*/, ''); 
-                v3 += `<em class="text-indigo-600 block mb-2 text-sm">💡 색다른 관점 주입: ${randomWildcard}</em>`;
+                v3 += `<em class="text-indigo-600 block mb-2 text-lg">💡 색다른 관점 주입: ${randomWildcard}</em>`;
                 v3 += `마치 <strong>${cleanWildcard}</strong> 느낌이 들었다. ${input} 일반적인 챗봇이라면 하지 않았을 이질적인 표현이 내 사고를 확장시켰다.`;
             } else {
                 v3 += `${input} (와일드카드가 비활성화되어 일상적인 흐름을 유지합니다.)`;
@@ -562,8 +574,8 @@
             generateBtn.disabled = true;
             generateBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 작성 중...';
             statusIndicator.innerText = "Processing via Local LLM...";
-            statusIndicator.className = "text-xs text-blue-600 font-sans animate-pulse";
-            outputArea.innerHTML = '<div class="h-full flex items-center justify-center text-slate-400">AI가 문맥을 분석하고 있습니다...</div>';
+            statusIndicator.className = "text-lg text-blue-600 font-sans animate-pulse";
+            outputArea.innerHTML = '<div class="h-full flex items-center justify-center text-slate-400 text-xl">AI가 문맥을 분석하고 있습니다...</div>';
 
             // Gather Inputs
             const lorebookState = {
@@ -584,8 +596,8 @@
                 
                 // Render Result
                 const formattedOutput = resultText.split('\n\n').map((block, idx) => {
-                    return `<div class="mb-6 p-4 bg-white border-l-4 border-slate-800 shadow-sm transition-all duration-500 opacity-0 translate-y-4 animate-in" style="animation: slideUp 0.5s ease-out forwards ${idx * 0.2}s;">
-                        <div class="text-slate-800 leading-relaxed whitespace-pre-wrap">${block}</div>
+                    return `<div class="mb-8 p-6 bg-white border-l-8 border-slate-800 shadow-md transition-all duration-500 opacity-0 translate-y-4 animate-in" style="animation: slideUp 0.5s ease-out forwards ${idx * 0.2}s;">
+                        <div class="text-slate-800 leading-loose whitespace-pre-wrap">${block}</div>
                     </div>`;
                 }).join('');
 
@@ -603,7 +615,7 @@
                 generateBtn.disabled = false;
                 generateBtn.innerHTML = '<i class="fa-solid fa-pen-nib"></i> 작성 시작';
                 statusIndicator.innerText = "Complete";
-                statusIndicator.className = "text-xs text-green-600 font-sans font-bold";
+                statusIndicator.className = "text-lg text-green-600 font-sans font-bold";
 
             }, 1500);
         });
